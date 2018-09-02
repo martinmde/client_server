@@ -123,6 +123,25 @@ namespace myserver
                 file.WriteLine("(nome) (none) (none)");
 
                 file.Close();
+
+                try
+                {
+                    System.IO.File.Delete(@"c:\client_server\passwords.txt");
+                    System.IO.File.Copy(@"c:\client_server\passwords_new.txt", @"c:\client_server\passwords.txt");
+                }
+                catch (Exception)
+                {
+                    void p()
+                    {
+                        txtStatus.Text += "could not copy file" + "\r\n";
+                        txtStatus.Text += @"c:\client_server\passwords_new.txt";
+                        txtStatus.Text += @"to c:\client_server\passwords.txt";
+
+                    }
+                    txtStatus.Invoke((MethodInvoker)p);
+                    throw;
+                }
+
             }
             catch (Exception)
             {
