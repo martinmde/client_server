@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SimpleTCP;
+using EasyEncryption;
 
 enum command:int { GET_PROJECTS=666, AUTHENTICATE} ;
 
@@ -109,7 +110,8 @@ namespace client_server
 
         private void btnAuth_Click(object sender, EventArgs e)
         {
-            String encrypt_pw = txtPassword.Text;
+            String encrypt_pw = EasyEncryption.SHA.ComputeSHA1Hash(txtPassword.Text);
+            txtPassword.Clear(); // clear ASAP
             SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("authenticate "+txtUsername.Text+" "+ encrypt_pw, TimeSpan.FromMilliseconds(1));
             current_command = (int)command.AUTHENTICATE;
         }

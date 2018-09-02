@@ -30,4 +30,12 @@ Today (2 Sep 2018) , the software does as shown in youtube:
 https://www.youtube.com/watch?v=ve2LX1tOwIM
 
 
+
+Another package installed is 
+https://github.com/polischuk/EasyEncryption/
+also obtainable via NuGet , look for EasyEncryption/
+
+
+
+
 A long way to go.

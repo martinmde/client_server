@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using SimpleTCP;
+using EasyEncryption;
+
+
+
 
 namespace myserver
 {
@@ -17,7 +21,7 @@ namespace myserver
         List<string> projectsList = new List<string> { };
         int num_projects = 0;
         int num_users = 0;
-
+        String the_user;  // the logged in user , only  1 user?
         List<string[]> users_passwordsList = new List<string[]> { };
 
         public deserver()
@@ -84,8 +88,9 @@ namespace myserver
                     {
                         users_passwordsList.Add(entries);
                         txtStatus.Text += entries[0] + "\r\n";
+                        num_users++;
                     }
-                    num_users++;
+                    
                 }
 
                 file.Close();
@@ -99,10 +104,48 @@ namespace myserver
 
 
 
-        } // get_projectnames
+        } // get_passwords
+
+
+        private void save_new_passwords()
+        {
+            try
+            {
+                System.IO.StreamWriter file =
+                new System.IO.StreamWriter(@"c:\client_server\passwords_new.txt");
+                String[] entries;
+                for (int i = 0; i < num_users; i++) {
+                    entries = users_passwordsList[i];
+                
+                file.WriteLine(entries[0] + " " + entries[1] + " " + entries[2]);
+                } //for
+
+                file.WriteLine("(nome) (none) (none)");
+
+                file.Close();
+            }
+            catch (Exception)
+            {
+
+                void p()
+                {
+                    txtStatus.Text += "could not open file" + "\r\n";
+                    txtStatus.Text += @"c:\client_server\passwords_new.txt";
+
+                }
+                txtStatus.Invoke((MethodInvoker)p);
 
 
 
+                
+                throw;
+            }
+
+
+
+
+
+        }//save_new_passwords
 
 
 
@@ -148,15 +191,29 @@ namespace myserver
                 String[] pw_entry;
                 int founduser = 0;
                 int foundpw = 0;
+
+                
+
+
                 for (int i = 0; i < num_users; i++)
                 {
                     pw_entry = users_passwordsList[i];
                     if (pw_entry[0] == command_user_pw[1]) { // user found , now check for pw storage option 
                         founduser = 1;
                         if(pw_entry[1]=="nohash")
+                        {   // password has been encrypted, but password in password file is not yet encrypted
+                            if (EasyEncryption.SHA.ComputeSHA1Hash(pw_entry[2]) == command_user_pw[2]) foundpw = 1;
+                            pw_entry[1] = "hash";
+                            pw_entry[2] = EasyEncryption.SHA.ComputeSHA1Hash(pw_entry[2]);
+                            users_passwordsList[i] = pw_entry;
+                            save_new_passwords();
+                            the_user = pw_entry[0];
+                        }
+                        else
                         {
+
                             if (pw_entry[2] == command_user_pw[2]) foundpw = 1;
-                            
+
                         }
                         break; // found user, checked password
 
