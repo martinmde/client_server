@@ -51,5 +51,25 @@ namespace client_server
             Client.WriteLineAndGetReply(txtMessage.Text, TimeSpan.FromMilliseconds(1));
            
         }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtStatus_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtMessage_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
