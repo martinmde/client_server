@@ -48,7 +48,8 @@ namespace client_server
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            Client.WriteLineAndGetReply(txtMessage.Text, TimeSpan.FromMilliseconds(1));
+            SimpleTCP.Message newmessage= Client.WriteLineAndGetReply(txtMessage.Text, TimeSpan.FromMilliseconds(1));
+
            
         }
 

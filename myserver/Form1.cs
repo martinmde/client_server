@@ -7,27 +7,63 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using SimpleTCP;
 
 namespace myserver
 {
     public partial class deserver : Form
     {
+        List<string> projectsList = new List<string> { };
+
         public deserver()
         {
             InitializeComponent();
         }
 
+        private void get_projectnames() {
 
+            int counter = 0;
+            string line;
+
+            // Read the file and display it line by line.  
+            try
+            {
+                System.IO.StreamReader file =
+                new System.IO.StreamReader(@"c:\client_server\projects.txt");
+                while ((line = file.ReadLine()) != null)
+                {
+                    if (line != "(none)")
+                    {
+                        projectsList.Add(line);
+                        txtStatus.Text +=line+"\r\n";
+                    }
+                    counter++;
+                }
+
+                file.Close();
+            }
+            catch (Exception)
+            {
+                txtStatus.Text += "file not found" + "\r\n";
+                txtStatus.Text += @"c:\client_server\projects.txt";
+                throw;
+            }
+            
+            
+            
+        } // get_projectnames
 
         SimpleTcpServer server;
 
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            txtStatus.Text += "Server starting";
+            txtStatus.Text = "Server starting" + "\r\n";
             System.Net.IPAddress ip = System.Net.IPAddress.Parse(txtHost.Text);
             server.Start(ip, Convert.ToInt32(txtPort.Text));
+
+            get_projectnames();
 
         }
 
