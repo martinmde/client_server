@@ -16,6 +16,7 @@ namespace myserver
     {
         List<string> projectsList = new List<string> { };
         int num_projects = 0;
+        int num_users = 0;
 
         List<string[]> users_passwordsList = new List<string[]> { };
 
@@ -66,7 +67,7 @@ namespace myserver
         private void get_passwords()
         {
 
-            int counter = 0;
+            
             string line;
             txtStatus.Text += "\r\n";
             txtStatus.Text += "users" + "\r\n";
@@ -84,7 +85,7 @@ namespace myserver
                         users_passwordsList.Add(entries);
                         txtStatus.Text += entries[0] + "\r\n";
                     }
-                    counter++;
+                    num_users++;
                 }
 
                 file.Close();
@@ -137,6 +138,35 @@ namespace myserver
             {
                 for(int i=0;i<num_projects;i++) e.ReplyLine(projectsList[i]);
                 e.ReplyLine("(none)");
+
+            }
+            else if (e.MessageString.StartsWith("authenticate"))
+            {
+                String message= e.MessageString.Replace((char)0x13, ' '); // ust 1 line, remove final  delimiter
+
+                String[] command_user_pw=message.Split(' ');  // syntax: authenticate username password
+                String[] pw_entry;
+                int founduser = 0;
+                int foundpw = 0;
+                for (int i = 0; i < num_users; i++)
+                {
+                    pw_entry = users_passwordsList[i];
+                    if (pw_entry[0] == command_user_pw[1]) { // user found , now check for pw storage option 
+                        founduser = 1;
+                        if(pw_entry[1]=="nohash")
+                        {
+                            if (pw_entry[2] == command_user_pw[2]) foundpw = 1;
+                            
+                        }
+                        break; // found user, checked password
+
+                    }
+                                 
+
+                }
+
+                if(founduser==1 && foundpw==1) e.ReplyLine("authenticated");
+                else e.ReplyLine("(none)");
 
             }
             else e.ReplyLine(e.MessageString); // default answer

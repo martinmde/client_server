@@ -46,7 +46,7 @@
             this.listBoxProjects = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label7 = new System.Windows.Forms.Label();
+            this.labelAuth = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnAuth = new System.Windows.Forms.Button();
@@ -232,7 +232,7 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.label7);
+            this.tabPage3.Controls.Add(this.labelAuth);
             this.tabPage3.Controls.Add(this.label2);
             this.tabPage3.Controls.Add(this.label1);
             this.tabPage3.Controls.Add(this.btnAuth);
@@ -246,14 +246,14 @@
             this.tabPage3.Text = "authenticate";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // label7
+            // labelAuth
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(85, 188);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(141, 17);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "not authenticated yet";
+            this.labelAuth.AutoSize = true;
+            this.labelAuth.Location = new System.Drawing.Point(85, 188);
+            this.labelAuth.Name = "labelAuth";
+            this.labelAuth.Size = new System.Drawing.Size(141, 17);
+            this.labelAuth.TabIndex = 14;
+            this.labelAuth.Text = "not authenticated yet";
             // 
             // label2
             // 
@@ -281,6 +281,7 @@
             this.btnAuth.TabIndex = 11;
             this.btnAuth.Text = "authenticate";
             this.btnAuth.UseVisualStyleBackColor = true;
+            this.btnAuth.Click += new System.EventHandler(this.btnAuth_Click);
             // 
             // txtUsername
             // 
@@ -354,7 +355,7 @@
         private System.Windows.Forms.ListBox listBoxProjects;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labelAuth;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnAuth;

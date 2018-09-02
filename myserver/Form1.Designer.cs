@@ -50,7 +50,8 @@
             this.txtServerMessage.Location = new System.Drawing.Point(119, 121);
             this.txtServerMessage.Multiline = true;
             this.txtServerMessage.Name = "txtServerMessage";
-            this.txtServerMessage.Size = new System.Drawing.Size(316, 59);
+            this.txtServerMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtServerMessage.Size = new System.Drawing.Size(316, 111);
             this.txtServerMessage.TabIndex = 9;
             // 
             // txtPort

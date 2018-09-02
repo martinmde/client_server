@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SimpleTCP;
 
-enum command:int { GET_PROJECTS=666} ;
+enum command:int { GET_PROJECTS=666, AUTHENTICATE} ;
 
 
 namespace client_server
@@ -58,6 +58,7 @@ namespace client_server
             void p(){
                 txtClientStatus.Text += messagecount.ToString()+e.MessageString+"\r\n";
             };
+
             void q()
             {
                 String[] projects = e.MessageString.Split((char) 0x13);
@@ -69,16 +70,26 @@ namespace client_server
                 }
             };
 
+            void r()
+            {
+                labelAuth.Text = "authenticated";
+            };
 
             txtClientStatus.Invoke((MethodInvoker)p);
 
             if(current_command == (int)command.GET_PROJECTS)
             {
+                
                 listBoxProjects.Invoke((MethodInvoker)q);
-
-
+                
             }
 
+            if (current_command == (int)command.AUTHENTICATE)
+            {
+                if (e.MessageString.StartsWith("authenticated"))
+                    labelAuth.Invoke((MethodInvoker)r);
+
+            }
 
         }
 
@@ -96,7 +107,11 @@ namespace client_server
             current_command = (int) command.GET_PROJECTS;
         }
 
-
-        
+        private void btnAuth_Click(object sender, EventArgs e)
+        {
+            String encrypt_pw = txtPassword.Text;
+            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("authenticate "+txtUsername.Text+" "+ encrypt_pw, TimeSpan.FromMilliseconds(1));
+            current_command = (int)command.AUTHENTICATE;
+        }
     }
 }
