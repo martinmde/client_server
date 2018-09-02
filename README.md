@@ -2,6 +2,9 @@
 systems architect softbare based on client-server approach
 
 This software requires to install "SimpleTCP" from  nuget.
+
+https://www.nuget.org/packages/SimpleTCP/
+
 Author of this package is Brandon Potter. 
 His website:
 
@@ -20,5 +23,11 @@ My goal is to write a software which helps me doing my job as
 system  engineer. 
 
 Means: setting up and maintaining a list of requirements.
+
+
+
+Today (2 Sep 2018) , the software does as shown in youtube:
+https://www.youtube.com/watch?v=ve2LX1tOwIM
+
 
 A long way to go.
