@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SimpleTCP;
 
+enum command:int { GET_PROJECTS=666} ;
+
 
 namespace client_server
 {
@@ -18,12 +20,24 @@ namespace client_server
         {
             InitializeComponent();
         }
+        private int current_command=0;
+        private int messagecount = 0;
 
         SimpleTcpClient Client;
         private void btnConnect_Click(object sender, EventArgs e)
         {
             btnConnect.Enabled = false;
-            Client.Connect(txtHost.Text, Convert.ToInt32(txtPort.Text));
+            try
+            {
+                Client.Connect(txtHost.Text, Convert.ToInt32(txtPort.Text));
+            }
+            catch (Exception)
+            {
+                label6.Text = "ERROR: could not connect to host";
+                label6.ForeColor = System.Drawing.Color.Red;
+                //throw;
+            }
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -39,38 +53,50 @@ namespace client_server
         // 
         private void Client_DataReceived(object sender, SimpleTCP.Message e)
         {
-            
+            messagecount++;
+
             void p(){
-                txtStatus.Text += e.MessageString;
+                txtClientStatus.Text += messagecount.ToString()+e.MessageString+"\r\n";
             };
-            txtStatus.Invoke((MethodInvoker)p);
+            void q()
+            {
+                String[] projects = e.MessageString.Split((char) 0x13);
+                int i = 0;
+                while (projects[i] != "(none)")
+                {
+                    listBoxProjects.Items.Add(projects[i]);
+                    i++;
+                }
+            };
+
+
+            txtClientStatus.Invoke((MethodInvoker)p);
+
+            if(current_command == (int)command.GET_PROJECTS)
+            {
+                listBoxProjects.Invoke((MethodInvoker)q);
+
+
+            }
+
+
         }
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            SimpleTCP.Message newmessage= Client.WriteLineAndGetReply(txtMessage.Text, TimeSpan.FromMilliseconds(1));
-
-           
+            SimpleTCP.Message newmessage= Client.WriteLineAndGetReply(txtMessage.Text, TimeSpan.FromMilliseconds(1));                  
         }
 
-        private void label5_Click(object sender, EventArgs e)
+
+  
+
+        private void button1_Click(object sender, EventArgs e)
         {
-
+            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get projects", TimeSpan.FromMilliseconds(1));
+            current_command = (int) command.GET_PROJECTS;
         }
 
-        private void label4_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void txtStatus_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtMessage_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

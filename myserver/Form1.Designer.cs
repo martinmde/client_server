@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.txtStatus = new System.Windows.Forms.TextBox();
-            this.txtMessage = new System.Windows.Forms.TextBox();
+            this.txtServerMessage = new System.Windows.Forms.TextBox();
             this.txtPort = new System.Windows.Forms.TextBox();
             this.txtHost = new System.Windows.Forms.TextBox();
             this.btnStart = new System.Windows.Forms.Button();
@@ -41,16 +41,17 @@
             this.txtStatus.Location = new System.Drawing.Point(119, 282);
             this.txtStatus.Multiline = true;
             this.txtStatus.Name = "txtStatus";
-            this.txtStatus.Size = new System.Drawing.Size(316, 59);
+            this.txtStatus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtStatus.Size = new System.Drawing.Size(316, 161);
             this.txtStatus.TabIndex = 11;
             // 
-            // txtMessage
+            // txtServerMessage
             // 
-            this.txtMessage.Location = new System.Drawing.Point(119, 121);
-            this.txtMessage.Multiline = true;
-            this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(316, 59);
-            this.txtMessage.TabIndex = 9;
+            this.txtServerMessage.Location = new System.Drawing.Point(119, 121);
+            this.txtServerMessage.Multiline = true;
+            this.txtServerMessage.Name = "txtServerMessage";
+            this.txtServerMessage.Size = new System.Drawing.Size(316, 59);
+            this.txtServerMessage.TabIndex = 9;
             // 
             // txtPort
             // 
@@ -95,7 +96,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.txtStatus);
-            this.Controls.Add(this.txtMessage);
+            this.Controls.Add(this.txtServerMessage);
             this.Controls.Add(this.txtPort);
             this.Controls.Add(this.txtHost);
             this.Controls.Add(this.btnStart);
@@ -110,7 +111,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtStatus;
-        private System.Windows.Forms.TextBox txtMessage;
+        private System.Windows.Forms.TextBox txtServerMessage;
         private System.Windows.Forms.TextBox txtPort;
         private System.Windows.Forms.TextBox txtHost;
         private System.Windows.Forms.Button btnStart;

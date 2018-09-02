@@ -30,10 +30,9 @@
         {
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
-            this.txtStatus = new System.Windows.Forms.TextBox();
+            this.txtClientStatus = new System.Windows.Forms.TextBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label6 = new System.Windows.Forms.Label();
@@ -43,7 +42,8 @@
             this.txtHost = new System.Windows.Forms.TextBox();
             this.btnConnect = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.btnGetProjects = new System.Windows.Forms.Button();
+            this.listBoxProjects = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label7 = new System.Windows.Forms.Label();
@@ -52,13 +52,14 @@
             this.btnAuth = new System.Windows.Forms.Button();
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtMessage
@@ -68,7 +69,6 @@
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.Size = new System.Drawing.Size(316, 59);
             this.txtMessage.TabIndex = 3;
-            this.txtMessage.TextChanged += new System.EventHandler(this.txtMessage_TextChanged);
             // 
             // btnSend
             // 
@@ -80,14 +80,13 @@
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
-            // txtStatus
+            // txtClientStatus
             // 
-            this.txtStatus.Location = new System.Drawing.Point(41, 204);
-            this.txtStatus.Multiline = true;
-            this.txtStatus.Name = "txtStatus";
-            this.txtStatus.Size = new System.Drawing.Size(316, 59);
-            this.txtStatus.TabIndex = 5;
-            this.txtStatus.TextChanged += new System.EventHandler(this.txtStatus_TextChanged);
+            this.txtClientStatus.Location = new System.Drawing.Point(41, 204);
+            this.txtClientStatus.Multiline = true;
+            this.txtClientStatus.Name = "txtClientStatus";
+            this.txtClientStatus.Size = new System.Drawing.Size(316, 88);
+            this.txtClientStatus.TabIndex = 5;
             // 
             // tabControl2
             // 
@@ -109,19 +108,6 @@
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "initialization";
             this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.btnSend);
-            this.tabPage5.Controls.Add(this.txtStatus);
-            this.tabPage5.Controls.Add(this.txtMessage);
-            this.tabPage5.Location = new System.Drawing.Point(4, 25);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(666, 344);
-            this.tabPage5.TabIndex = 1;
-            this.tabPage5.Text = "working view";
-            this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // tabControl1
             // 
@@ -205,7 +191,8 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.listBox1);
+            this.tabPage2.Controls.Add(this.btnGetProjects);
+            this.tabPage2.Controls.Add(this.listBoxProjects);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
@@ -215,14 +202,24 @@
             this.tabPage2.Text = "projects";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // listBox1
+            // btnGetProjects
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(73, 81);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 84);
-            this.listBox1.TabIndex = 1;
+            this.btnGetProjects.Location = new System.Drawing.Point(89, 182);
+            this.btnGetProjects.Name = "btnGetProjects";
+            this.btnGetProjects.Size = new System.Drawing.Size(126, 23);
+            this.btnGetProjects.TabIndex = 2;
+            this.btnGetProjects.Text = "get projects";
+            this.btnGetProjects.UseVisualStyleBackColor = true;
+            this.btnGetProjects.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // listBoxProjects
+            // 
+            this.listBoxProjects.FormattingEnabled = true;
+            this.listBoxProjects.ItemHeight = 16;
+            this.listBoxProjects.Location = new System.Drawing.Point(73, 81);
+            this.listBoxProjects.Name = "listBoxProjects";
+            this.listBoxProjects.Size = new System.Drawing.Size(120, 84);
+            this.listBoxProjects.TabIndex = 1;
             // 
             // label3
             // 
@@ -302,6 +299,19 @@
             this.txtPassword.Text = "password";
             this.txtPassword.UseSystemPasswordChar = true;
             // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.btnSend);
+            this.tabPage5.Controls.Add(this.txtClientStatus);
+            this.tabPage5.Controls.Add(this.txtMessage);
+            this.tabPage5.Location = new System.Drawing.Point(4, 25);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(666, 344);
+            this.tabPage5.TabIndex = 1;
+            this.tabPage5.Text = "working view";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -313,8 +323,6 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl2.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage5.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -322,6 +330,8 @@
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -329,7 +339,7 @@
         #endregion
         private System.Windows.Forms.TextBox txtMessage;
         private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.TextBox txtStatus;
+        private System.Windows.Forms.TextBox txtClientStatus;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabControl tabControl1;
@@ -341,7 +351,7 @@
         private System.Windows.Forms.TextBox txtHost;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBoxProjects;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label7;
@@ -351,6 +361,7 @@
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.Button btnGetProjects;
     }
 }
 
