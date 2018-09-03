@@ -21,8 +21,10 @@ namespace myserver
         List<string> projectsList = new List<string> { };
         int num_projects = 0;
         int num_users = 0;
+        int num_roles = 0;
         String the_user;  // the logged in user , only  1 user?
         List<string[]> users_passwordsList = new List<string[]> { };
+        List<string[]> users_roles_projectsList = new List<string[]> { };
 
         public deserver()
         {
@@ -107,6 +109,48 @@ namespace myserver
         } // get_passwords
 
 
+
+
+
+        private void get_roles()
+        {
+
+
+            string line;
+            txtStatus.Text += "\r\n";
+            txtStatus.Text += "roles" + "\r\n";
+            txtStatus.Text += "------------" + "\r\n";
+            // Read the file and display it line by line.  
+            try
+            {
+                System.IO.StreamReader file =
+                new System.IO.StreamReader(@"c:\client_server\users_roles_projects.txt");
+                while ((line = file.ReadLine()) != null)
+                {
+                    String[] entries = line.Split(' ');
+                    if (entries[0] != "(none)")
+                    {
+                        users_roles_projectsList.Add(entries);
+                        txtStatus.Text += line + "\r\n";
+                        num_roles++;
+                    }
+
+                }
+
+                file.Close();
+            }
+            catch (Exception)
+            {
+                txtStatus.Text += "file not found" + "\r\n";
+                txtStatus.Text += @"c:\client_server\passwords.txt";
+                throw;
+            }
+
+
+
+        } // get_roles
+
+
         private void save_new_passwords()
         {
             try
@@ -185,6 +229,7 @@ namespace myserver
 
             get_projectnames();
             get_passwords();
+            get_roles();
         }
 
         private void deserver_DataReceived(object sender, SimpleTCP.Message e)
@@ -198,21 +243,28 @@ namespace myserver
 
             if(e.MessageString.StartsWith("get projects"))
             {
-                for(int i=0;i<num_projects;i++) e.ReplyLine(projectsList[i]);
+                String message = e.MessageString.Replace((char)0x13, ' ');
+                String[] command_user_pw = message.Split(' ');
+                String user = command_user_pw[2];
+
+
+                for (int i = 0; i < num_roles; i++)
+                {
+                    String[] us_ro_prj = users_roles_projectsList[i];
+
+                    if (user == us_ro_prj[0]) e.ReplyLine(us_ro_prj[2]);
+                }
                 e.ReplyLine("(none)");
 
             }
             else if (e.MessageString.StartsWith("authenticate"))
             {
-                String message= e.MessageString.Replace((char)0x13, ' '); // ust 1 line, remove final  delimiter
+                String message= e.MessageString.Replace((char)0x13, ' '); // use 1 line, remove final  delimiter
 
                 String[] command_user_pw=message.Split(' ');  // syntax: authenticate username password
                 String[] pw_entry;
                 int founduser = 0;
                 int foundpw = 0;
-
-                
-
 
                 for (int i = 0; i < num_users; i++)
                 {
@@ -243,6 +295,17 @@ namespace myserver
 
                 if(founduser==1 && foundpw==1) e.ReplyLine("authenticated");
                 else e.ReplyLine("(none)");
+
+            }
+            else if (e.MessageString.StartsWith("get requirements"))
+            {
+                String message = e.MessageString.Replace((char)0x13, ' '); // use 1 line, remove final  delimiter
+                String[] command_user_pw = message.Split(' ');
+                String user = command_user_pw[2];
+                String project = command_user_pw[3];
+                String path= @"c:\client_server\project\";
+
+
 
             }
             else e.ReplyLine(e.MessageString); // default answer
