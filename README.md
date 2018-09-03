@@ -39,3 +39,12 @@ also obtainable via NuGet , look for EasyEncryption/
 
 
 A long way to go.
+
+
+client_server.rar  contains example server contentswhich must be 
+extracted to c:\client_server .  
+The content is  as expected from the wiki:
+
+https://github.com/martinmde/clint_server/wiki/server
+
+
