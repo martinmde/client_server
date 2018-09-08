@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using SimpleTCP;
 using EasyEncryption;
-
+using LibGit2Sharp;
 
 
 
@@ -330,6 +330,23 @@ namespace myserver
                 server.Stop();
                 txtStatus.Clear();
             }
+        }
+
+        private void buttonCreateProject_Click(object sender, EventArgs e)
+        {
+        // https://github.com/libgit2/libgit2sharp/wiki/git-init
+         
+
+            bool exists = System.IO.Directory.Exists(@"c:\client_server\" + textBoxProjName.Text);
+
+            if (!exists)
+                System.IO.Directory.CreateDirectory(@"c:\client_server\" + textBoxProjName.Text);
+
+            String  myrepo = Repository.Init(@"c:\client_server\" + textBoxProjName.Text, false);
+             
+          
+
+
         }
     }
 }
