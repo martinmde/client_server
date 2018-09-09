@@ -11,7 +11,9 @@ using System.IO;
 using SimpleTCP;
 using EasyEncryption;
 using LibGit2Sharp;
-
+using LibGit2Sharp.Core;
+using LibGit2Sharp.Core.Handles;
+using LibGit2Sharp.Handlers;
 
 
 namespace myserver
@@ -334,17 +336,32 @@ namespace myserver
 
         private void buttonCreateProject_Click(object sender, EventArgs e)
         {
-        // https://github.com/libgit2/libgit2sharp/wiki/git-init
-         
+            // https://github.com/libgit2/libgit2sharp/wiki/git-init
+            String reponame= @"c:\client_server\" + textBoxProjName.Text;
 
-            bool exists = System.IO.Directory.Exists(@"c:\client_server\" + textBoxProjName.Text);
+            bool exists = System.IO.Directory.Exists(reponame);
 
             if (!exists)
-                System.IO.Directory.CreateDirectory(@"c:\client_server\" + textBoxProjName.Text);
+                System.IO.Directory.CreateDirectory(reponame);
 
-            String  myrepo = Repository.Init(@"c:\client_server\" + textBoxProjName.Text, false);
-             
-          
+            
+            String  myrepo = Repository.Init(reponame, false);
+            var file= System.IO.File.Create(reponame+@"\jada.txt");
+            
+            file.Close();
+            MessageBox.Show("now modify" + reponame + "jada.txt");
+            using (var repo = new Repository(reponame))
+            {
+                Commands.Stage(repo, "*");   // add all files 
+
+                // now do the  commit
+                Signature author = new Signature("ff", "@anasemi.de", DateTime.Now);
+                Signature committer = author;
+
+                // Commit to the repository
+                Commit commit = repo.Commit("Here's a commit i made!", author, committer);
+
+            }
 
 
         }
