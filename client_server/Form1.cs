@@ -24,6 +24,7 @@ namespace client_server
         private int current_command=0;
         private int messagecount = 0;
         private String current_project = "";
+        private String lasttab = "init";  
 
         SimpleTcpClient Client;
         private void btnConnect_Click(object sender, EventArgs e)
@@ -46,59 +47,19 @@ namespace client_server
         {
             Client = new SimpleTcpClient();
             Client.StringEncoder = Encoding.UTF8;
-            Client.DataReceived += Client_DataReceived_phase1;
+            Client.DataReceived += Client_DataReceived_init;   // connect, auth, get projects
         }
 
         // the function below is handed over to the client object
         // and acts as EventHandler,  see SimpleTcpClient.cs
         // The client object knows nothing about the txtStatus box, 
         // 
-        private void Client_DataReceived_phase1(object sender, SimpleTCP.Message e)
-        {
-            messagecount++;
-
-            void p(){
-                txtClientStatus.Text += messagecount.ToString()+e.MessageString+"\r\n";
-            };
-
-            void q()
-            {
-                String[] projects = e.MessageString.Split((char) 0x13);
-                int i = 0;
-                while (projects[i] != "(none)")
-                {
-                    listBoxProjects.Items.Add(projects[i]);
-                    i++;
-                }
-            };
-
-            void r()
-            {
-                labelAuth.Text = "authenticated";
-            };
-
-            txtClientStatus.Invoke((MethodInvoker)p);
-
-            if(current_command == (int)command.GET_PROJECTS)
-            {
-                
-                listBoxProjects.Invoke((MethodInvoker)q);
-                
-            }
-
-            if (current_command == (int)command.AUTHENTICATE)
-            {
-                if (e.MessageString.StartsWith("authenticated"))
-                    labelAuth.Invoke((MethodInvoker)r);
-
-            }
-
-        }
-
+        
         private void btnSend_Click(object sender, EventArgs e)
         {
             SimpleTCP.Message newmessage= Client.WriteLineAndGetReply(txtMessage.Text, TimeSpan.FromMilliseconds(1));
-            // Client_DataReceived will handle the reply
+            // data is received via event handler Client_DataReceived_phase1/2
+            // Client_DataReceived_phase1/2 will handle the reply
         }
 
 
@@ -126,7 +87,7 @@ namespace client_server
             if (result == DialogResult.OK)
             {
                 current_project = listBoxProjects.Items[listBoxProjects.SelectedIndex].ToString();
-                
+                label3.Text = "project chosen: " + current_project;
             }
             else current_project = "";
 
@@ -137,8 +98,57 @@ namespace client_server
             label3.Text = labelAuth.Text;
         }
 
+        /// <summary>
+        /// //////////////////////////////////////////////////////////////////
+        
 
-        private void Client_DataReceived_phase2(object sender, SimpleTCP.Message e)
+        private void Client_DataReceived_init(object sender, SimpleTCP.Message e)  // connect, auth, get projects
+        {
+            messagecount++;
+
+            void p()
+            {  // will always be executed
+                txtClientStatus.Text += messagecount.ToString() + e.MessageString + "\r\n";
+            };
+
+            void q() // does get projects  handling
+            {
+                String[] projects = e.MessageString.Split((char)0x13);
+                int i = 0;
+                while (projects[i] != "(none)")
+                {
+                    listBoxProjects.Items.Add(projects[i]);
+                    i++;
+                }
+            };
+
+            void r() // handles  authentification
+            {
+                labelAuth.Text = "authenticated as " + txtUsername.Text;
+            };
+
+            txtClientStatus.Invoke((MethodInvoker)p);
+
+            if (current_command == (int)command.GET_PROJECTS)
+            {
+
+                listBoxProjects.Invoke((MethodInvoker)q);
+
+            }
+
+            if (current_command == (int)command.AUTHENTICATE)
+            {
+                if (e.MessageString.StartsWith("authenticated"))
+                    labelAuth.Invoke((MethodInvoker)r);
+
+            }
+
+        }
+
+        /// <summary>
+        /// ///////////////////////////////////////////////
+
+        private void Client_DataReceived_work(object sender, SimpleTCP.Message e)   // working
         {
             messagecount++;
 
@@ -169,27 +179,64 @@ namespace client_server
 
             }
 
-        }
+        }  // phase3
 
 
-            private void tabControl2_TabIndexChanged(object sender, EventArgs e)
+
+        private void Client_DataReceived_debug(object sender, SimpleTCP.Message e)  //debug
         {
-            if (tabControl2.TabIndex == 2)
+            messagecount++;
+
+            void p()
             {
-                Client.DataReceived -= Client_DataReceived_phase1;
-                Client.DataReceived -= Client_DataReceived_phase2;
+                txtClientStatus.Text += messagecount.ToString() + e.MessageString + "\r\n";
+            };
+
+            txtClientStatus.Invoke((MethodInvoker)p);
+
+             
+            
+
+        } //phase2  debug
+
+
+
+
+
+        private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            //MessageBox.Show(tabControl2.SelectedTab.Text);
+            if (tabControl2.SelectedTab.Text.StartsWith("init"))  
+            {
+
+                if (lasttab == "work") Client.DataReceived -= Client_DataReceived_work;
+                if (lasttab == "debug") Client.DataReceived -= Client_DataReceived_debug;
+
+                Client.DataReceived += Client_DataReceived_init;
+                lasttab = "init";
+            }
+            if (tabControl2.SelectedTab.Text.StartsWith("debug"))
+            {
+
+                if (lasttab == "work") Client.DataReceived -= Client_DataReceived_work;
+                if (lasttab == "init") Client.DataReceived -= Client_DataReceived_init;
+                Client.DataReceived += Client_DataReceived_debug;
+                lasttab = "debug";
+
+                SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get requirements " + current_project + " " + txtUsername.Text, TimeSpan.FromMilliseconds(1));
+                current_command = (int)command.GET_REQUIREMENTS;
 
             }
-            else
+            if(tabControl2.SelectedTab.Text.StartsWith("work"))
             {
 
-                Client.DataReceived -= Client_DataReceived_phase2;
-                Client.DataReceived -= Client_DataReceived_phase1;
-
+                if (lasttab == "init") Client.DataReceived -= Client_DataReceived_init;
+                if (lasttab == "debug") Client.DataReceived -= Client_DataReceived_debug;
+                Client.DataReceived += Client_DataReceived_work;
+                lasttab = "work";
             }
-
-            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get requirements "+ current_project+" "+txtUsername.Text, TimeSpan.FromMilliseconds(1));
-            current_command = (int)command.GET_REQUIREMENTS;
+            
 
 
         }
