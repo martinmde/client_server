@@ -311,8 +311,25 @@ namespace myserver
 
                 string[] subdirectoryEntries = Directory.GetDirectories(path);  // every requirement is a subdirectory
                 foreach (string subdirectory in subdirectoryEntries) {
+                    String preview_file = subdirectory + @"\preview.txt";
+                    try
+                    {
+                        using (StreamReader sr = new StreamReader(preview_file))
 
-                    e.ReplyLine(subdirectory);
+                        {
+                            // Read the stream to a string, and write the string to the console.
+                            String line = sr.ReadLine();
+                            e.ReplyLine(line);
+                        }
+                    }
+                    catch
+                    {
+                        e.ReplyLine("cannot open "+preview_file);
+                    }
+
+
+                    //e.ReplyLine(subdirectory);
+
                 }
                 e.ReplyLine("(none)");
 
