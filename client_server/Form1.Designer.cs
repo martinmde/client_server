@@ -54,12 +54,14 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.txtClientStatus = new System.Windows.Forms.TextBox();
             this.txtMessage = new System.Windows.Forms.TextBox();
+            this.textBoxRequirements = new System.Windows.Forms.TextBox();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -281,6 +283,7 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.textBoxRequirements);
             this.tabPage5.Location = new System.Drawing.Point(4, 25);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
@@ -330,6 +333,15 @@
             this.txtMessage.Size = new System.Drawing.Size(316, 59);
             this.txtMessage.TabIndex = 6;
             // 
+            // textBoxRequirements
+            // 
+            this.textBoxRequirements.Location = new System.Drawing.Point(136, 185);
+            this.textBoxRequirements.Multiline = true;
+            this.textBoxRequirements.Name = "textBoxRequirements";
+            this.textBoxRequirements.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxRequirements.Size = new System.Drawing.Size(316, 88);
+            this.textBoxRequirements.TabIndex = 9;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -348,6 +360,8 @@
             this.tabPage3.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
             this.ResumeLayout(false);
@@ -381,6 +395,7 @@
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.TextBox txtClientStatus;
         private System.Windows.Forms.TextBox txtMessage;
+        private System.Windows.Forms.TextBox textBoxRequirements;
     }
 }
 

@@ -32,6 +32,8 @@ namespace client_server
             btnConnect.Enabled = false;
             try
             {
+                label6.Text = "connected to host";
+                label6.ForeColor = System.Drawing.Color.Green;
                 Client.Connect(txtHost.Text, Convert.ToInt32(txtPort.Text));
             }
             catch (Exception)
@@ -154,10 +156,10 @@ namespace client_server
 
             void p()
             {
-                txtClientStatus.Text += messagecount.ToString() + e.MessageString + "\r\n";
+                textBoxRequirements.Text += messagecount.ToString() + e.MessageString + "\r\n";
             };
 
-            txtClientStatus.Invoke((MethodInvoker)p);
+            textBoxRequirements.Invoke((MethodInvoker)p);
 
             
             void q()
@@ -166,7 +168,7 @@ namespace client_server
                 int i = 0;
                 while (requirements[i] != "(none)")
                 {
-                    txtClientStatus.Lines[i] = requirements[i];
+                    textBoxRequirements.Lines[i] = requirements[i];
                     i++;
                 }
             };
@@ -175,7 +177,7 @@ namespace client_server
 
             if (current_command == (int)command.GET_REQUIREMENTS)
             {
-                txtClientStatus.Invoke((MethodInvoker)q);
+                textBoxRequirements.Invoke((MethodInvoker)q);
 
             }
 
@@ -194,8 +196,6 @@ namespace client_server
 
             txtClientStatus.Invoke((MethodInvoker)p);
 
-             
-            
 
         } //phase2  debug
 
@@ -224,8 +224,7 @@ namespace client_server
                 Client.DataReceived += Client_DataReceived_debug;
                 lasttab = "debug";
 
-                SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get requirements " + current_project + " " + txtUsername.Text, TimeSpan.FromMilliseconds(1));
-                current_command = (int)command.GET_REQUIREMENTS;
+                
 
             }
             if(tabControl2.SelectedTab.Text.StartsWith("work"))
@@ -235,6 +234,11 @@ namespace client_server
                 if (lasttab == "debug") Client.DataReceived -= Client_DataReceived_debug;
                 Client.DataReceived += Client_DataReceived_work;
                 lasttab = "work";
+
+                SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get requirements " + current_project + " " + txtUsername.Text, TimeSpan.FromMilliseconds(1));
+                current_command = (int)command.GET_REQUIREMENTS;
+
+
             }
             
 

@@ -303,9 +303,19 @@ namespace myserver
             {
                 String message = e.MessageString.Replace((char)0x13, ' '); // use 1 line, remove final  delimiter
                 String[] command_user_pw = message.Split(' ');
-                String user = command_user_pw[2];
-                String project = command_user_pw[3];
-                String path= @"c:\client_server\project\";
+
+                // get requirements bmm580 mac1rt
+                String user = command_user_pw[3];
+                String project = command_user_pw[2];
+                String path= @"c:\client_server\"+project;
+
+                string[] subdirectoryEntries = Directory.GetDirectories(path);  // every requirement is a subdirectory
+                foreach (string subdirectory in subdirectoryEntries) {
+
+                    e.ReplyLine(subdirectory);
+                }
+                e.ReplyLine("(none)");
+
 
 
 
