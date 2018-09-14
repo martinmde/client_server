@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 using SimpleTCP;
 using EasyEncryption;
 
@@ -21,10 +22,10 @@ namespace client_server
         {
             InitializeComponent();
         }
-        private int current_command=0;
+        private int current_command = 0;
         private int messagecount = 0;
         private String current_project = "";
-        private String lasttab = "init";  
+        private String lasttab = "init";
 
         SimpleTcpClient Client;
         private void btnConnect_Click(object sender, EventArgs e)
@@ -42,7 +43,7 @@ namespace client_server
                 label6.ForeColor = System.Drawing.Color.Red;
                 //throw;
             }
-            
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -56,10 +57,10 @@ namespace client_server
         // and acts as EventHandler,  see SimpleTcpClient.cs
         // The client object knows nothing about the txtStatus box, 
         // 
-        
+
         private void btnSend_Click(object sender, EventArgs e)
         {
-            SimpleTCP.Message newmessage= Client.WriteLineAndGetReply(txtMessage.Text, TimeSpan.FromMilliseconds(1));
+            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply(txtMessage.Text, TimeSpan.FromMilliseconds(1));
             // data is received via event handler Client_DataReceived_phase1/2
             // Client_DataReceived_phase1/2 will handle the reply
         }
@@ -69,8 +70,8 @@ namespace client_server
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get projects "+txtUsername.Text, TimeSpan.FromMilliseconds(1));
-            current_command = (int) command.GET_PROJECTS;
+            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get projects " + txtUsername.Text, TimeSpan.FromMilliseconds(1));
+            current_command = (int)command.GET_PROJECTS;
             label3.Text = "click to choose";
         }
 
@@ -78,13 +79,13 @@ namespace client_server
         {
             String encrypt_pw = EasyEncryption.SHA.ComputeSHA1Hash(txtPassword.Text);
             txtPassword.Clear(); // clear ASAP
-            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("authenticate "+txtUsername.Text+" "+ encrypt_pw, TimeSpan.FromMilliseconds(1));
+            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("authenticate " + txtUsername.Text + " " + encrypt_pw, TimeSpan.FromMilliseconds(1));
             current_command = (int)command.AUTHENTICATE;
         }
 
         private void listBoxProjects_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DialogResult result=MessageBox.Show( listBoxProjects.Items[listBoxProjects.SelectedIndex].ToString(),"choose project" , MessageBoxButtons.OKCancel );
+            DialogResult result = MessageBox.Show(listBoxProjects.Items[listBoxProjects.SelectedIndex].ToString(), "choose project", MessageBoxButtons.OKCancel);
 
             if (result == DialogResult.OK)
             {
@@ -102,7 +103,7 @@ namespace client_server
 
         /// <summary>
         /// //////////////////////////////////////////////////////////////////
-        
+
 
         private void Client_DataReceived_init(object sender, SimpleTCP.Message e)  // connect, auth, get projects
         {
@@ -152,23 +153,34 @@ namespace client_server
 
         private void Client_DataReceived_work(object sender, SimpleTCP.Message e)   // working
         {
-            messagecount++;
-
-            void p()
-            {
-                textBoxRequirements.Text += messagecount.ToString() + e.MessageString + "\r\n";
-            };
-
-            textBoxRequirements.Invoke((MethodInvoker)p);
+           
 
             
-            void q()
+            void p()
+            {
+                
+                String[] requirements = e.MessageString.Split((char)0x13);
+                int i = 0;
+                while (requirements[i] != "(none)")
+                {
+                    checkedListBoxReq.Items.Insert(i, requirements[i] );
+                    i++;
+                }
+
+                
+            };
+            if (current_command == (int)command.GET_REQUIREMENTS)
+            {
+                checkedListBoxReq.Invoke((MethodInvoker)p);
+            }
+
+            void q()  // get requirements
             {
                 String[] requirements = e.MessageString.Split((char)0x13);
                 int i = 0;
                 while (requirements[i] != "(none)")
                 {
-                    textBoxRequirements.Lines[i] = requirements[i];
+                    textBoxRequirements.Text += requirements[i]+ Environment.NewLine;
                     i++;
                 }
             };
@@ -205,9 +217,9 @@ namespace client_server
 
         private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
             //MessageBox.Show(tabControl2.SelectedTab.Text);
-            if (tabControl2.SelectedTab.Text.StartsWith("init"))  
+            if (tabControl2.SelectedTab.Text.StartsWith("init"))
             {
 
                 if (lasttab == "work") Client.DataReceived -= Client_DataReceived_work;
@@ -224,10 +236,10 @@ namespace client_server
                 Client.DataReceived += Client_DataReceived_debug;
                 lasttab = "debug";
 
-                
+
 
             }
-            if(tabControl2.SelectedTab.Text.StartsWith("work"))
+            if (tabControl2.SelectedTab.Text.StartsWith("work"))
             {
 
                 if (lasttab == "init") Client.DataReceived -= Client_DataReceived_init;
@@ -235,14 +247,33 @@ namespace client_server
                 Client.DataReceived += Client_DataReceived_work;
                 lasttab = "work";
 
-                SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get requirements " + current_project + " " + txtUsername.Text, TimeSpan.FromMilliseconds(1));
-                current_command = (int)command.GET_REQUIREMENTS;
+                
 
 
             }
-            
 
 
+
+        }
+
+        private void btnFastStart_Click(object sender, EventArgs e)
+        {
+
+            btnConnect_Click(sender, e);
+            txtPassword.Text = "1234";
+            btnAuth_Click(sender, e);
+
+            Thread.Sleep(10);
+            current_project = "bmm580";
+            label3.Text = "project chosen: " + current_project;
+
+
+        }
+
+        private void btnGetReq_Click(object sender, EventArgs e)
+        {
+            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get requirements " + current_project + " " + txtUsername.Text, TimeSpan.FromMilliseconds(1));
+            current_command = (int)command.GET_REQUIREMENTS;
         }
     }
 }

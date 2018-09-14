@@ -308,35 +308,67 @@ namespace myserver
                 String user = command_user_pw[3];
                 String project = command_user_pw[2];
                 String path= @"c:\client_server\"+project;
+                String chapter = "";
+                
 
                 string[] subdirectoryEntries = Directory.GetDirectories(path);  // every requirement is a subdirectory
-                foreach (string subdirectory in subdirectoryEntries) {
-                    String preview_file = subdirectory + @"\preview.txt";
-                    try
-                    {
-                        using (StreamReader sr = new StreamReader(preview_file))
 
+                foreach (string subdirectory in subdirectoryEntries)
+                {
+                    if (!subdirectory.Contains(".git"))
+                    {
+
+
+                        String chapter_file = subdirectory + @"\chapter.txt";
+                        try
                         {
-                            // Read the stream to a string, and write the string to the console.
-                            String line = sr.ReadLine();
-                            e.ReplyLine(line);
+                            using (StreamReader sr = new StreamReader(chapter_file))
+
+                            {
+                                // Read the stream to a string, and write the string to the console.
+                                String line = sr.ReadLine();
+                                chapter = line;
+
+
+                            }
                         }
+                        catch
+                        {
+                            chapter = "0.0.0.0";
+                        }
+
+
+                        String preview_file = subdirectory + @"\preview.txt";
+                        try
+                        {
+                            using (StreamReader sr = new StreamReader(preview_file))
+
+                            {
+                                // Read the stream to a string, and write the string to the console.
+                                String line = sr.ReadLine();
+                                e.ReplyLine(chapter+ " "+line);
+                                txtServerMessage.Text += chapter + " " + line + Environment.NewLine;
+
+                            }
+                        }
+                        catch
+                        {
+                            e.ReplyLine("cannot open " + preview_file);
+                            txtServerMessage.Text += "cannot open " + preview_file + Environment.NewLine;
+                        }
+
+
+                       
+
                     }
-                    catch
-                    {
-                        e.ReplyLine("cannot open "+preview_file);
-                    }
-
-
-                    //e.ReplyLine(subdirectory);
-
                 }
                 e.ReplyLine("(none)");
+                txtServerMessage.Text += "(none)" + Environment.NewLine;
 
 
 
 
-            }
+            }  // get requirements
             else e.ReplyLine(e.MessageString); // default answer
 
         }
@@ -391,6 +423,57 @@ namespace myserver
             }
 
 
+        }
+
+        private void btnRunDebug_Click(object sender, EventArgs e)
+        {
+            var repo = new LibGit2Sharp.Repository(@"c:\client_server\bmm580\");
+            
+
+            foreach (Commit commit in repo.Commits)
+            {
+                foreach (var parent in commit.Parents)
+                {
+                    textBoxDebug.AppendText( commit.Sha+ "  "+commit.MessageShort+ Environment.NewLine);
+                    textBoxDebug.AppendText(commit.Committer.ToString()   + Environment.NewLine);
+                    //textBoxDebug.AppendText(commit.Author.ToString() + Environment.NewLine);
+
+
+                    foreach (TreeEntryChanges change in repo.Diff.Compare<TreeChanges>(repo.Head.Tip.Tree,
+                                                  DiffTargets.Index | DiffTargets.WorkingDirectory))
+                       // foreach (TreeEntryChanges change in repo.Diff.Compare<TreeChanges>(parent.Tree,commit.Tree))
+                    {
+                        textBoxDebug.AppendText(change.Status+ "  " + change.Path + Environment.NewLine);
+
+
+
+                         
+                        List<Commit> CommitList = new List<Commit>();
+                        foreach (LogEntry entry in repo.Commits.QueryBy(change.Path).ToList())
+                            CommitList.Add(entry.Commit);
+                        CommitList.Add(null); // Added to show correct initial add
+
+                        int ChangeDesired = 0; // Change difference desired
+                        var repoDifferences = repo.Diff.Compare<Patch>((Equals(CommitList[ChangeDesired + 1], null)) ? null : CommitList[ChangeDesired + 1].Tree, (Equals(CommitList[ChangeDesired], null)) ? null : CommitList[ChangeDesired].Tree);
+                        PatchEntryChanges file = null;
+                        try { file = repoDifferences.First(  ); }
+                        catch { } // If the file has been renamed in the past- this search will fail
+                        if (!Equals(file, null))
+                        {
+                            String result = file.Patch;
+                            textBoxDebug.AppendText(result + "  " +  Environment.NewLine);
+                        }
+                        
+
+
+
+                    }
+
+                    
+
+                }
+
+            }
         }
     }
 }

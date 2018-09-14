@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.CheckedListBox checkedListBoxReq;
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -50,11 +51,14 @@
             this.listBoxProjects = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.textBoxRequirements = new System.Windows.Forms.TextBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.btnSend = new System.Windows.Forms.Button();
             this.txtClientStatus = new System.Windows.Forms.TextBox();
             this.txtMessage = new System.Windows.Forms.TextBox();
-            this.textBoxRequirements = new System.Windows.Forms.TextBox();
+            this.btnFastStart = new System.Windows.Forms.Button();
+            this.btnGetReq = new System.Windows.Forms.Button();
+            checkedListBoxReq = new System.Windows.Forms.CheckedListBox();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -73,7 +77,7 @@
             this.tabControl2.Location = new System.Drawing.Point(57, 12);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(674, 373);
+            this.tabControl2.Size = new System.Drawing.Size(1124, 373);
             this.tabControl2.TabIndex = 9;
             this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
             // 
@@ -101,6 +105,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnFastStart);
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.label5);
@@ -283,14 +288,27 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(checkedListBoxReq);
+            this.tabPage5.Controls.Add(this.btnGetReq);
             this.tabPage5.Controls.Add(this.textBoxRequirements);
             this.tabPage5.Location = new System.Drawing.Point(4, 25);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(666, 344);
+            this.tabPage5.Size = new System.Drawing.Size(1116, 344);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "working view";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // textBoxRequirements
+            // 
+            this.textBoxRequirements.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxRequirements.Location = new System.Drawing.Point(54, 135);
+            this.textBoxRequirements.Multiline = true;
+            this.textBoxRequirements.Name = "textBoxRequirements";
+            this.textBoxRequirements.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxRequirements.Size = new System.Drawing.Size(498, 180);
+            this.textBoxRequirements.TabIndex = 9;
+            this.textBoxRequirements.WordWrap = false;
             // 
             // tabPage6
             // 
@@ -333,20 +351,42 @@
             this.txtMessage.Size = new System.Drawing.Size(316, 59);
             this.txtMessage.TabIndex = 6;
             // 
-            // textBoxRequirements
+            // btnFastStart
             // 
-            this.textBoxRequirements.Location = new System.Drawing.Point(136, 185);
-            this.textBoxRequirements.Multiline = true;
-            this.textBoxRequirements.Name = "textBoxRequirements";
-            this.textBoxRequirements.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxRequirements.Size = new System.Drawing.Size(316, 88);
-            this.textBoxRequirements.TabIndex = 9;
+            this.btnFastStart.Location = new System.Drawing.Point(56, 179);
+            this.btnFastStart.Name = "btnFastStart";
+            this.btnFastStart.Size = new System.Drawing.Size(240, 23);
+            this.btnFastStart.TabIndex = 17;
+            this.btnFastStart.Text = "connect,auth,bmm580";
+            this.btnFastStart.UseVisualStyleBackColor = true;
+            this.btnFastStart.Click += new System.EventHandler(this.btnFastStart_Click);
+            // 
+            // btnGetReq
+            // 
+            this.btnGetReq.Location = new System.Drawing.Point(333, 74);
+            this.btnGetReq.Name = "btnGetReq";
+            this.btnGetReq.Size = new System.Drawing.Size(143, 33);
+            this.btnGetReq.TabIndex = 10;
+            this.btnGetReq.Text = "get requirements";
+            this.btnGetReq.UseVisualStyleBackColor = true;
+            this.btnGetReq.Click += new System.EventHandler(this.btnGetReq_Click);
+            // 
+            // checkedListBoxReq
+            // 
+            checkedListBoxReq.CheckOnClick = true;
+            checkedListBoxReq.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            checkedListBoxReq.FormattingEnabled = true;
+            checkedListBoxReq.HorizontalScrollbar = true;
+            checkedListBoxReq.Location = new System.Drawing.Point(588, 135);
+            checkedListBoxReq.Name = "checkedListBoxReq";
+            checkedListBoxReq.Size = new System.Drawing.Size(510, 158);
+            checkedListBoxReq.TabIndex = 12;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1204, 450);
             this.Controls.Add(this.tabControl2);
             this.Name = "Form1";
             this.Text = "theClient";
@@ -396,6 +436,8 @@
         private System.Windows.Forms.TextBox txtClientStatus;
         private System.Windows.Forms.TextBox txtMessage;
         private System.Windows.Forms.TextBox textBoxRequirements;
+        private System.Windows.Forms.Button btnFastStart;
+        private System.Windows.Forms.Button btnGetReq;
     }
 }
 

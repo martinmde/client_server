@@ -36,20 +36,24 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.buttonCreateProject = new System.Windows.Forms.Button();
             this.textBoxProjName = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.buttonCreateProject = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnRunDebug = new System.Windows.Forms.Button();
+            this.textBoxDebug = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtStatus
@@ -110,10 +114,11 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(391, 121);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(397, 278);
+            this.tabControl1.Size = new System.Drawing.Size(816, 278);
             this.tabControl1.TabIndex = 13;
             // 
             // tabPage1
@@ -127,6 +132,23 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "create,delete,etc";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // textBoxProjName
+            // 
+            this.textBoxProjName.Location = new System.Drawing.Point(51, 85);
+            this.textBoxProjName.Name = "textBoxProjName";
+            this.textBoxProjName.Size = new System.Drawing.Size(167, 22);
+            this.textBoxProjName.TabIndex = 1;
+            // 
+            // buttonCreateProject
+            // 
+            this.buttonCreateProject.Location = new System.Drawing.Point(249, 85);
+            this.buttonCreateProject.Name = "buttonCreateProject";
+            this.buttonCreateProject.Size = new System.Drawing.Size(111, 23);
+            this.buttonCreateProject.TabIndex = 0;
+            this.buttonCreateProject.Text = "create project";
+            this.buttonCreateProject.UseVisualStyleBackColor = true;
+            this.buttonCreateProject.Click += new System.EventHandler(this.buttonCreateProject_Click);
             // 
             // tabPage2
             // 
@@ -146,60 +168,21 @@
             this.tabPage2.Text = "user mgmt";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // buttonCreateProject
+            // label3
             // 
-            this.buttonCreateProject.Location = new System.Drawing.Point(249, 85);
-            this.buttonCreateProject.Name = "buttonCreateProject";
-            this.buttonCreateProject.Size = new System.Drawing.Size(111, 23);
-            this.buttonCreateProject.TabIndex = 0;
-            this.buttonCreateProject.Text = "create project";
-            this.buttonCreateProject.UseVisualStyleBackColor = true;
-            this.buttonCreateProject.Click += new System.EventHandler(this.buttonCreateProject_Click);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(53, 159);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(51, 17);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "project";
             // 
-            // textBoxProjName
+            // textBox3
             // 
-            this.textBoxProjName.Location = new System.Drawing.Point(51, 85);
-            this.textBoxProjName.Name = "textBoxProjName";
-            this.textBoxProjName.Size = new System.Drawing.Size(167, 22);
-            this.textBoxProjName.TabIndex = 1;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(27, 53);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(117, 22);
-            this.textBox1.TabIndex = 3;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(283, 113);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(85, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "add user";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Items.AddRange(new object[] {
-            "reader",
-            "contributor",
-            "admin",
-            ""});
-            this.checkedListBox1.Location = new System.Drawing.Point(157, 87);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(120, 89);
-            this.checkedListBox1.TabIndex = 4;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(52, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 17);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "username";
+            this.textBox3.Location = new System.Drawing.Point(28, 182);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(117, 22);
+            this.textBox3.TabIndex = 8;
             // 
             // label2
             // 
@@ -217,27 +200,80 @@
             this.textBox2.Size = new System.Drawing.Size(117, 22);
             this.textBox2.TabIndex = 6;
             // 
-            // label3
+            // label1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(53, 159);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 17);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "project";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(52, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 17);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "username";
             // 
-            // textBox3
+            // checkedListBox1
             // 
-            this.textBox3.Location = new System.Drawing.Point(28, 182);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(117, 22);
-            this.textBox3.TabIndex = 8;
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Items.AddRange(new object[] {
+            "reader",
+            "contributor",
+            "admin",
+            ""});
+            this.checkedListBox1.Location = new System.Drawing.Point(157, 87);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(120, 89);
+            this.checkedListBox1.TabIndex = 4;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(27, 53);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(117, 22);
+            this.textBox1.TabIndex = 3;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(283, 113);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(85, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "add user";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.textBoxDebug);
+            this.tabPage3.Controls.Add(this.btnRunDebug);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(808, 249);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "debug";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // btnRunDebug
+            // 
+            this.btnRunDebug.Location = new System.Drawing.Point(156, 46);
+            this.btnRunDebug.Name = "btnRunDebug";
+            this.btnRunDebug.Size = new System.Drawing.Size(75, 23);
+            this.btnRunDebug.TabIndex = 0;
+            this.btnRunDebug.Text = "run";
+            this.btnRunDebug.UseVisualStyleBackColor = true;
+            this.btnRunDebug.Click += new System.EventHandler(this.btnRunDebug_Click);
+            // 
+            // textBoxDebug
+            // 
+            this.textBoxDebug.Location = new System.Drawing.Point(25, 120);
+            this.textBoxDebug.Multiline = true;
+            this.textBoxDebug.Name = "textBoxDebug";
+            this.textBoxDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxDebug.Size = new System.Drawing.Size(746, 123);
+            this.textBoxDebug.TabIndex = 1;
             // 
             // deserver
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1219, 450);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.txtStatus);
@@ -253,6 +289,8 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -279,6 +317,9 @@
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TextBox textBoxDebug;
+        private System.Windows.Forms.Button btnRunDebug;
     }
 }
 
