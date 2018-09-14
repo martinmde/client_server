@@ -363,6 +363,7 @@ namespace myserver
                     }
                 }
                 e.ReplyLine("(none)");
+                
                 txtServerMessage.Text += "(none)" + Environment.NewLine;
 
 

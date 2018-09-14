@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.CheckedListBox checkedListBoxReq;
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnFastStart = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -51,14 +51,17 @@
             this.listBoxProjects = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.btnGetReq = new System.Windows.Forms.Button();
             this.textBoxRequirements = new System.Windows.Forms.TextBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.btnSend = new System.Windows.Forms.Button();
             this.txtClientStatus = new System.Windows.Forms.TextBox();
             this.txtMessage = new System.Windows.Forms.TextBox();
-            this.btnFastStart = new System.Windows.Forms.Button();
-            this.btnGetReq = new System.Windows.Forms.Button();
-            checkedListBoxReq = new System.Windows.Forms.CheckedListBox();
+            this.buttonUp = new System.Windows.Forms.Button();
+            this.buttonDown = new System.Windows.Forms.Button();
+            this.buttonReduceChapter = new System.Windows.Forms.Button();
+            this.buttonIncChapter = new System.Windows.Forms.Button();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -87,7 +90,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(666, 344);
+            this.tabPage4.Size = new System.Drawing.Size(1116, 344);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "initialization";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -119,6 +122,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "host,port";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnFastStart
+            // 
+            this.btnFastStart.Location = new System.Drawing.Point(56, 179);
+            this.btnFastStart.Name = "btnFastStart";
+            this.btnFastStart.Size = new System.Drawing.Size(240, 23);
+            this.btnFastStart.TabIndex = 17;
+            this.btnFastStart.Text = "connect,auth,bmm580";
+            this.btnFastStart.UseVisualStyleBackColor = true;
+            this.btnFastStart.Click += new System.EventHandler(this.btnFastStart_Click);
             // 
             // label6
             // 
@@ -288,7 +301,11 @@
             // 
             // tabPage5
             // 
-            this.tabPage5.Controls.Add(checkedListBoxReq);
+            this.tabPage5.Controls.Add(this.buttonIncChapter);
+            this.tabPage5.Controls.Add(this.buttonReduceChapter);
+            this.tabPage5.Controls.Add(this.buttonDown);
+            this.tabPage5.Controls.Add(this.buttonUp);
+            this.tabPage5.Controls.Add(this.checkedListBox1);
             this.tabPage5.Controls.Add(this.btnGetReq);
             this.tabPage5.Controls.Add(this.textBoxRequirements);
             this.tabPage5.Location = new System.Drawing.Point(4, 25);
@@ -299,14 +316,36 @@
             this.tabPage5.Text = "working view";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.CheckOnClick = true;
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.HorizontalScrollbar = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(52, 144);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.ScrollAlwaysVisible = true;
+            this.checkedListBox1.Size = new System.Drawing.Size(483, 157);
+            this.checkedListBox1.TabIndex = 13;
+            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            // 
+            // btnGetReq
+            // 
+            this.btnGetReq.Location = new System.Drawing.Point(333, 74);
+            this.btnGetReq.Name = "btnGetReq";
+            this.btnGetReq.Size = new System.Drawing.Size(143, 33);
+            this.btnGetReq.TabIndex = 10;
+            this.btnGetReq.Text = "get requirements";
+            this.btnGetReq.UseVisualStyleBackColor = true;
+            this.btnGetReq.Click += new System.EventHandler(this.btnGetReq_Click);
+            // 
             // textBoxRequirements
             // 
             this.textBoxRequirements.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxRequirements.Location = new System.Drawing.Point(54, 135);
+            this.textBoxRequirements.Location = new System.Drawing.Point(920, 64);
             this.textBoxRequirements.Multiline = true;
             this.textBoxRequirements.Name = "textBoxRequirements";
             this.textBoxRequirements.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxRequirements.Size = new System.Drawing.Size(498, 180);
+            this.textBoxRequirements.Size = new System.Drawing.Size(99, 180);
             this.textBoxRequirements.TabIndex = 9;
             this.textBoxRequirements.WordWrap = false;
             // 
@@ -318,7 +357,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 25);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(666, 344);
+            this.tabPage6.Size = new System.Drawing.Size(1116, 344);
             this.tabPage6.TabIndex = 2;
             this.tabPage6.Text = "debug view/traditional";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -351,36 +390,43 @@
             this.txtMessage.Size = new System.Drawing.Size(316, 59);
             this.txtMessage.TabIndex = 6;
             // 
-            // btnFastStart
+            // buttonUp
             // 
-            this.btnFastStart.Location = new System.Drawing.Point(56, 179);
-            this.btnFastStart.Name = "btnFastStart";
-            this.btnFastStart.Size = new System.Drawing.Size(240, 23);
-            this.btnFastStart.TabIndex = 17;
-            this.btnFastStart.Text = "connect,auth,bmm580";
-            this.btnFastStart.UseVisualStyleBackColor = true;
-            this.btnFastStart.Click += new System.EventHandler(this.btnFastStart_Click);
+            this.buttonUp.Location = new System.Drawing.Point(667, 157);
+            this.buttonUp.Name = "buttonUp";
+            this.buttonUp.Size = new System.Drawing.Size(75, 34);
+            this.buttonUp.TabIndex = 14;
+            this.buttonUp.Text = "cut";
+            this.buttonUp.UseVisualStyleBackColor = true;
+            this.buttonUp.Click += new System.EventHandler(this.buttonUp_Click);
             // 
-            // btnGetReq
+            // buttonDown
             // 
-            this.btnGetReq.Location = new System.Drawing.Point(333, 74);
-            this.btnGetReq.Name = "btnGetReq";
-            this.btnGetReq.Size = new System.Drawing.Size(143, 33);
-            this.btnGetReq.TabIndex = 10;
-            this.btnGetReq.Text = "get requirements";
-            this.btnGetReq.UseVisualStyleBackColor = true;
-            this.btnGetReq.Click += new System.EventHandler(this.btnGetReq_Click);
+            this.buttonDown.Location = new System.Drawing.Point(654, 221);
+            this.buttonDown.Name = "buttonDown";
+            this.buttonDown.Size = new System.Drawing.Size(105, 34);
+            this.buttonDown.TabIndex = 15;
+            this.buttonDown.Text = "paste before";
+            this.buttonDown.UseVisualStyleBackColor = true;
+            this.buttonDown.Click += new System.EventHandler(this.buttonDown_Click);
             // 
-            // checkedListBoxReq
+            // buttonReduceChapter
             // 
-            checkedListBoxReq.CheckOnClick = true;
-            checkedListBoxReq.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            checkedListBoxReq.FormattingEnabled = true;
-            checkedListBoxReq.HorizontalScrollbar = true;
-            checkedListBoxReq.Location = new System.Drawing.Point(588, 135);
-            checkedListBoxReq.Name = "checkedListBoxReq";
-            checkedListBoxReq.Size = new System.Drawing.Size(510, 158);
-            checkedListBoxReq.TabIndex = 12;
+            this.buttonReduceChapter.Location = new System.Drawing.Point(571, 191);
+            this.buttonReduceChapter.Name = "buttonReduceChapter";
+            this.buttonReduceChapter.Size = new System.Drawing.Size(75, 23);
+            this.buttonReduceChapter.TabIndex = 16;
+            this.buttonReduceChapter.Text = "<--";
+            this.buttonReduceChapter.UseVisualStyleBackColor = true;
+            // 
+            // buttonIncChapter
+            // 
+            this.buttonIncChapter.Location = new System.Drawing.Point(769, 191);
+            this.buttonIncChapter.Name = "buttonIncChapter";
+            this.buttonIncChapter.Size = new System.Drawing.Size(75, 23);
+            this.buttonIncChapter.TabIndex = 17;
+            this.buttonIncChapter.Text = "-->";
+            this.buttonIncChapter.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -438,6 +484,11 @@
         private System.Windows.Forms.TextBox textBoxRequirements;
         private System.Windows.Forms.Button btnFastStart;
         private System.Windows.Forms.Button btnGetReq;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.Button buttonIncChapter;
+        private System.Windows.Forms.Button buttonReduceChapter;
+        private System.Windows.Forms.Button buttonDown;
+        private System.Windows.Forms.Button buttonUp;
     }
 }
 

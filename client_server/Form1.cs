@@ -161,19 +161,27 @@ namespace client_server
                 
                 String[] requirements = e.MessageString.Split((char)0x13);
                 int i = 0;
-                while (requirements[i] != "(none)")
+                
+                while ( i<requirements.Length  )
                 {
-                    checkedListBoxReq.Items.Insert(i, requirements[i] );
+                    if (requirements[i] != "(none)")
+                    {
+                        checkedListBox1.Items.Insert(i, requirements[i]);
+
+                    }
+                    else break;
                     i++;
                 }
 
                 
             };
+
             if (current_command == (int)command.GET_REQUIREMENTS)
             {
-                checkedListBoxReq.Invoke((MethodInvoker)p);
+                checkedListBox1.Invoke((MethodInvoker)p);
             }
 
+            /*
             void q()  // get requirements
             {
                 String[] requirements = e.MessageString.Split((char)0x13);
@@ -185,15 +193,16 @@ namespace client_server
                 }
             };
 
-
-
+            
             if (current_command == (int)command.GET_REQUIREMENTS)
             {
                 textBoxRequirements.Invoke((MethodInvoker)q);
 
             }
+            */
 
-        }  // phase3
+
+        }  // work
 
 
 
@@ -274,6 +283,62 @@ namespace client_server
         {
             SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get requirements " + current_project + " " + txtUsername.Text, TimeSpan.FromMilliseconds(1));
             current_command = (int)command.GET_REQUIREMENTS;
+        }
+
+        String [] temp = new String[100];
+        int numtemp;
+
+        private void buttonUp_Click(object sender, EventArgs e)  // cut
+        {
+
+            numtemp = 0;
+            var myEnumerator = checkedListBox1.CheckedIndices.GetEnumerator();
+            int y;
+            while (myEnumerator.MoveNext() != false)
+            {
+                y = (int)myEnumerator.Current;
+                checkedListBox1.SetItemChecked(y, false);
+                temp[numtemp++] = checkedListBox1.Items[y].ToString();
+                checkedListBox1.Items.RemoveAt(y);
+                myEnumerator = checkedListBox1.CheckedIndices.GetEnumerator();
+            }
+
+
+        }
+
+        private void buttonDown_Click(object sender, EventArgs e)
+        {
+            var myEnumerator = checkedListBox1.CheckedIndices.GetEnumerator();
+            int y;
+            while (myEnumerator.MoveNext() != false)
+            {
+                y = (int)myEnumerator.Current;
+                checkedListBox1.SetItemChecked(y, false);
+                for (int i=0;i<numtemp;i++)  checkedListBox1.Items.Insert(y,temp[i]);
+                numtemp = 0;
+            }
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+
+            var myEnumerator = checkedListBox1.CheckedIndices.GetEnumerator();
+            int y,z;
+            while (myEnumerator.MoveNext() != false)
+            {
+                y = (int)myEnumerator.Current;
+                z = y;
+                if(myEnumerator.MoveNext() != false)
+                {
+                    z = (int)myEnumerator.Current;
+
+                }
+
+
+                for(int i=Math.Min(z,y); i<Math.Max(y,z);i++) checkedListBox1.SetItemChecked(i, true);
+
+            }
         }
     }
 }
