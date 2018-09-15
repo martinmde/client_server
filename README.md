@@ -1,6 +1,14 @@
 # clint_server
 systems architect softbare based on client-server approach
 
+To compiler properly the repository has to be cloned in directory
+c:\github\sysarch
+
+
+If you place it somewhere else Visual Studio "Designer" fails.
+Weird.
+
+
 This software requires to install "SimpleTCP" from  nuget.
 
 https://www.nuget.org/packages/SimpleTCP/
