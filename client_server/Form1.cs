@@ -161,12 +161,15 @@ namespace client_server
                 
                 String[] requirements = e.MessageString.Split((char)0x13);
                 int i = 0;
-                
+                int offset = checkedListBox1.Items.Count; // functio will be called several times
+
+
+
                 while ( i<requirements.Length  )
                 {
-                    if (requirements[i] != "(none)")
+                    if (requirements[i] != "(none)" && requirements[i] !="" && requirements[i] != " ")
                     {
-                        checkedListBox1.Items.Insert(i, requirements[i]);
+                        checkedListBox1.Items.Insert(i+offset, requirements[i]);
 
                     }
                     else break;
@@ -281,7 +284,7 @@ namespace client_server
 
         private void btnGetReq_Click(object sender, EventArgs e)
         {
-            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get requirements " + current_project + " " + txtUsername.Text, TimeSpan.FromMilliseconds(1));
+            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get requirements " + current_project + " " + txtUsername.Text, TimeSpan.FromMilliseconds(100));
             current_command = (int)command.GET_REQUIREMENTS;
         }
 

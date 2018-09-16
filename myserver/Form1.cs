@@ -234,11 +234,24 @@ namespace myserver
             get_roles();
         }
 
+        private void log_sentback_data(String message)
+        {
+
+            void p()
+            {
+                txtServerMessage.Text += "sent " + message + Environment.NewLine;
+
+            }
+            txtServerMessage.Invoke((MethodInvoker)p);
+
+
+        }
+
         private void deserver_DataReceived(object sender, SimpleTCP.Message e)
         {
             void p()
             {
-                txtServerMessage.Text += "received "+e.MessageString+"\r\n";
+                txtServerMessage.Text += "received "+e.MessageString + Environment.NewLine;
                 
             }
             txtServerMessage.Invoke((MethodInvoker)p);
@@ -328,8 +341,6 @@ namespace myserver
                                 // Read the stream to a string, and write the string to the console.
                                 String line = sr.ReadLine();
                                 chapter = line;
-
-
                             }
                         }
                         catch
@@ -347,14 +358,14 @@ namespace myserver
                                 // Read the stream to a string, and write the string to the console.
                                 String line = sr.ReadLine();
                                 e.ReplyLine(chapter+ " "+line);
-                                txtServerMessage.Text += chapter + " " + line + Environment.NewLine;
+                                log_sentback_data( chapter + " " + line);
 
                             }
                         }
                         catch
                         {
                             e.ReplyLine("cannot open " + preview_file);
-                            txtServerMessage.Text += "cannot open " + preview_file + Environment.NewLine;
+                            log_sentback_data( "cannot open " + preview_file + Environment.NewLine);
                         }
 
 
@@ -363,8 +374,7 @@ namespace myserver
                     }
                 }
                 e.ReplyLine("(none)");
-                
-                txtServerMessage.Text += "(none)" + Environment.NewLine;
+                log_sentback_data( "(none)" + Environment.NewLine);
 
 
 
