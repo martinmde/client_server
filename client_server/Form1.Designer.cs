@@ -62,6 +62,7 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.txtClientStatus = new System.Windows.Forms.TextBox();
             this.txtMessage = new System.Windows.Forms.TextBox();
+            this.btnTestCom = new System.Windows.Forms.Button();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -389,6 +390,7 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.btnTestCom);
             this.tabPage6.Controls.Add(this.btnSend);
             this.tabPage6.Controls.Add(this.txtClientStatus);
             this.tabPage6.Controls.Add(this.txtMessage);
@@ -416,7 +418,7 @@
             this.txtClientStatus.Multiline = true;
             this.txtClientStatus.Name = "txtClientStatus";
             this.txtClientStatus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtClientStatus.Size = new System.Drawing.Size(316, 88);
+            this.txtClientStatus.Size = new System.Drawing.Size(887, 118);
             this.txtClientStatus.TabIndex = 8;
             // 
             // txtMessage
@@ -425,8 +427,18 @@
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMessage.Size = new System.Drawing.Size(316, 59);
+            this.txtMessage.Size = new System.Drawing.Size(887, 98);
             this.txtMessage.TabIndex = 6;
+            // 
+            // btnTestCom
+            // 
+            this.btnTestCom.Location = new System.Drawing.Point(343, 55);
+            this.btnTestCom.Name = "btnTestCom";
+            this.btnTestCom.Size = new System.Drawing.Size(192, 23);
+            this.btnTestCom.TabIndex = 9;
+            this.btnTestCom.Text = "test comm";
+            this.btnTestCom.UseVisualStyleBackColor = true;
+            this.btnTestCom.Click += new System.EventHandler(this.btnTestCom_Click);
             // 
             // Form1
             // 
@@ -489,6 +501,7 @@
         private System.Windows.Forms.Button buttonReduceChapter;
         private System.Windows.Forms.Button buttonDown;
         private System.Windows.Forms.Button buttonUp;
+        private System.Windows.Forms.Button btnTestCom;
     }
 }
 

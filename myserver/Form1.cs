@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
@@ -283,6 +284,23 @@ namespace myserver
                 e.ReplyLine("(none)");
 
             }
+            else if(e.MessageString.StartsWith("send stuff"))
+            {
+                String message = e.MessageString.Replace((char)0x13, ' ');
+                String[] seed = message.Split(' ');
+                Int16 iseed = Convert.ToInt16(seed[2]);
+
+
+                for (int i = iseed;i < iseed+100; i++)
+                {
+                    String us_ro_prj = EasyEncryption.SHA.ComputeSHA1Hash(i.ToString());
+
+                    e.ReplyLine(iseed.ToString()+ " "+us_ro_prj+" "+ EasyEncryption.SHA.ComputeSHA1Hash(us_ro_prj));
+                    //Thread.Sleep(1);
+                }
+                e.ReplyLine("(none)");
+
+            }
             else if (e.MessageString.StartsWith("authenticate"))
             {
                 String message= e.MessageString.Replace((char)0x13, ' '); // use 1 line, remove final  delimiter
@@ -454,7 +472,7 @@ namespace myserver
             {
                 foreach (var parent in commit.Parents)
                 {
-                    textBoxDebug.AppendText( commit.Sha+ "  "+commit.MessageShort+ Environment.NewLine);
+                    textBoxDebug.AppendText( commit.Sha+ "   "+commit.MessageShort+ Environment.NewLine);
                     textBoxDebug.AppendText(commit.Committer.ToString()   + Environment.NewLine);
                     //textBoxDebug.AppendText(commit.Author.ToString() + Environment.NewLine);
 

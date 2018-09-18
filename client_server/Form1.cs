@@ -11,7 +11,7 @@ using System.Threading;
 using SimpleTCP;
 using EasyEncryption;
 
-enum command:int { GET_PROJECTS=666, AUTHENTICATE, GET_REQUIREMENTS } ;
+enum command:int { GET_PROJECTS=666, AUTHENTICATE, GET_REQUIREMENTS, TEST_COM } ;
 
 
 namespace client_server
@@ -206,12 +206,41 @@ namespace client_server
         {
             messagecount++;
 
-            void p()
+            void p() 
+            {
+                String[] messages = e.MessageString.Split((char)0x13);
+                int i = 0;
+                while (i < messages.Length) {
+                    // when data is received too fast this function is called once only 
+                    // and there  is a 0x13  between the messages
+                    if (messages[i].Length >= 1)
+                    {
+                        txtClientStatus.Text += messagecount.ToString() + "   " + messages[i] + Environment.NewLine;
+                        String [] sha;
+                        sha = messages[i].Split(' ');
+                        if (sha[2] != EasyEncryption.SHA.ComputeSHA1Hash(sha[1]))
+                        {
+                            txtClientStatus.Text += "error " + Environment.NewLine;
+                            MessageBox.Show("error " + sha[0]);
+                        }
+
+                    }
+                i++;
+                messagecount++;
+            }
+            }
+
+            txtClientStatus.Invoke((MethodInvoker)p);
+
+
+            /*void q()
             {
                 txtClientStatus.Text += messagecount.ToString() + e.MessageString + Environment.NewLine;
             };
+            if(current_command==  (int)command.TEST_COM)  txtClientStatus.Invoke((MethodInvoker)q);
+            */
 
-            txtClientStatus.Invoke((MethodInvoker)p);
+
 
 
         } //phase2  debug
@@ -328,6 +357,19 @@ namespace client_server
                 for(int i=Math.Min(z,y); i<Math.Max(y,z);i++) checkedListBox1.SetItemChecked(i, true);
 
             }
+        }
+
+        int seed = 1;
+
+        private void btnTestCom_Click(object sender, EventArgs e) 
+        {
+            txtClientStatus.Clear();
+
+            current_command = (int)command.TEST_COM;
+            seed++;
+            Client.WriteLine("send stuff " + seed.ToString());  
+
+
         }
     }
 }
