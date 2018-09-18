@@ -51,6 +51,10 @@
             this.listBoxProjects = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.buttonIncChapter = new System.Windows.Forms.Button();
+            this.buttonReduceChapter = new System.Windows.Forms.Button();
+            this.buttonDown = new System.Windows.Forms.Button();
+            this.buttonUp = new System.Windows.Forms.Button();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.btnGetReq = new System.Windows.Forms.Button();
             this.textBoxRequirements = new System.Windows.Forms.TextBox();
@@ -58,10 +62,6 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.txtClientStatus = new System.Windows.Forms.TextBox();
             this.txtMessage = new System.Windows.Forms.TextBox();
-            this.buttonUp = new System.Windows.Forms.Button();
-            this.buttonDown = new System.Windows.Forms.Button();
-            this.buttonReduceChapter = new System.Windows.Forms.Button();
-            this.buttonIncChapter = new System.Windows.Forms.Button();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -316,6 +316,44 @@
             this.tabPage5.Text = "working view";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // buttonIncChapter
+            // 
+            this.buttonIncChapter.Location = new System.Drawing.Point(769, 191);
+            this.buttonIncChapter.Name = "buttonIncChapter";
+            this.buttonIncChapter.Size = new System.Drawing.Size(75, 23);
+            this.buttonIncChapter.TabIndex = 17;
+            this.buttonIncChapter.Text = "-->";
+            this.buttonIncChapter.UseVisualStyleBackColor = true;
+            // 
+            // buttonReduceChapter
+            // 
+            this.buttonReduceChapter.Location = new System.Drawing.Point(571, 191);
+            this.buttonReduceChapter.Name = "buttonReduceChapter";
+            this.buttonReduceChapter.Size = new System.Drawing.Size(75, 23);
+            this.buttonReduceChapter.TabIndex = 16;
+            this.buttonReduceChapter.Text = "<--";
+            this.buttonReduceChapter.UseVisualStyleBackColor = true;
+            // 
+            // buttonDown
+            // 
+            this.buttonDown.Location = new System.Drawing.Point(654, 221);
+            this.buttonDown.Name = "buttonDown";
+            this.buttonDown.Size = new System.Drawing.Size(105, 34);
+            this.buttonDown.TabIndex = 15;
+            this.buttonDown.Text = "paste before";
+            this.buttonDown.UseVisualStyleBackColor = true;
+            this.buttonDown.Click += new System.EventHandler(this.buttonDown_Click);
+            // 
+            // buttonUp
+            // 
+            this.buttonUp.Location = new System.Drawing.Point(667, 157);
+            this.buttonUp.Name = "buttonUp";
+            this.buttonUp.Size = new System.Drawing.Size(75, 34);
+            this.buttonUp.TabIndex = 14;
+            this.buttonUp.Text = "cut";
+            this.buttonUp.UseVisualStyleBackColor = true;
+            this.buttonUp.Click += new System.EventHandler(this.buttonUp_Click);
+            // 
             // checkedListBox1
             // 
             this.checkedListBox1.CheckOnClick = true;
@@ -330,7 +368,7 @@
             // 
             // btnGetReq
             // 
-            this.btnGetReq.Location = new System.Drawing.Point(333, 74);
+            this.btnGetReq.Location = new System.Drawing.Point(259, 64);
             this.btnGetReq.Name = "btnGetReq";
             this.btnGetReq.Size = new System.Drawing.Size(143, 33);
             this.btnGetReq.TabIndex = 10;
@@ -390,49 +428,11 @@
             this.txtMessage.Size = new System.Drawing.Size(316, 59);
             this.txtMessage.TabIndex = 6;
             // 
-            // buttonUp
-            // 
-            this.buttonUp.Location = new System.Drawing.Point(667, 157);
-            this.buttonUp.Name = "buttonUp";
-            this.buttonUp.Size = new System.Drawing.Size(75, 34);
-            this.buttonUp.TabIndex = 14;
-            this.buttonUp.Text = "cut";
-            this.buttonUp.UseVisualStyleBackColor = true;
-            this.buttonUp.Click += new System.EventHandler(this.buttonUp_Click);
-            // 
-            // buttonDown
-            // 
-            this.buttonDown.Location = new System.Drawing.Point(654, 221);
-            this.buttonDown.Name = "buttonDown";
-            this.buttonDown.Size = new System.Drawing.Size(105, 34);
-            this.buttonDown.TabIndex = 15;
-            this.buttonDown.Text = "paste before";
-            this.buttonDown.UseVisualStyleBackColor = true;
-            this.buttonDown.Click += new System.EventHandler(this.buttonDown_Click);
-            // 
-            // buttonReduceChapter
-            // 
-            this.buttonReduceChapter.Location = new System.Drawing.Point(571, 191);
-            this.buttonReduceChapter.Name = "buttonReduceChapter";
-            this.buttonReduceChapter.Size = new System.Drawing.Size(75, 23);
-            this.buttonReduceChapter.TabIndex = 16;
-            this.buttonReduceChapter.Text = "<--";
-            this.buttonReduceChapter.UseVisualStyleBackColor = true;
-            // 
-            // buttonIncChapter
-            // 
-            this.buttonIncChapter.Location = new System.Drawing.Point(769, 191);
-            this.buttonIncChapter.Name = "buttonIncChapter";
-            this.buttonIncChapter.Size = new System.Drawing.Size(75, 23);
-            this.buttonIncChapter.TabIndex = 17;
-            this.buttonIncChapter.Text = "-->";
-            this.buttonIncChapter.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1204, 450);
+            this.ClientSize = new System.Drawing.Size(1328, 469);
             this.Controls.Add(this.tabControl2);
             this.Name = "Form1";
             this.Text = "theClient";
