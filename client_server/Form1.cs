@@ -28,6 +28,16 @@ namespace client_server
         private String lasttab = "init";
 
         SimpleTcpClient Client;
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Client = new SimpleTcpClient();
+            Client.StringEncoder = Encoding.UTF8;
+            Client.DataReceived += Client_DataReceived_init;   // connect, auth, get projects
+        }
+
+
+
         private void btnConnect_Click(object sender, EventArgs e)
         {
             btnConnect.Enabled = false;
@@ -46,12 +56,7 @@ namespace client_server
 
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            Client = new SimpleTcpClient();
-            Client.StringEncoder = Encoding.UTF8;
-            Client.DataReceived += Client_DataReceived_init;   // connect, auth, get projects
-        }
+      
 
         // the function below is handed over to the client object
         // and acts as EventHandler,  see SimpleTcpClient.cs
@@ -60,7 +65,10 @@ namespace client_server
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply(txtMessage.Text, TimeSpan.FromMilliseconds(1));
+            //SimpleTCP.Message newmessage = Client.WriteLineAndGetReply(txtMessage.Text, TimeSpan.FromMilliseconds(100));
+             Client.WriteLine(txtMessage.Text);
+            
+            
             // data is received via event handler Client_DataReceived_phase1/2
             // Client_DataReceived_phase1/2 will handle the reply
         }
@@ -70,7 +78,9 @@ namespace client_server
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get projects " + txtUsername.Text, TimeSpan.FromMilliseconds(1));
+            //SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get projects " + txtUsername.Text, TimeSpan.FromMilliseconds(1000));
+            Client.WriteLine("get projects " + txtUsername.Text);
+
             current_command = (int)command.GET_PROJECTS;
             label3.Text = "click to choose";
         }
@@ -79,7 +89,8 @@ namespace client_server
         {
             String encrypt_pw = EasyEncryption.SHA.ComputeSHA1Hash(txtPassword.Text);
             txtPassword.Clear(); // clear ASAP
-            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("authenticate " + txtUsername.Text + " " + encrypt_pw, TimeSpan.FromMilliseconds(1));
+            //SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("authenticate " + txtUsername.Text + " " + encrypt_pw, TimeSpan.FromMilliseconds(1000));
+            Client.WriteLine("authenticate " + txtUsername.Text + " " + encrypt_pw);
             current_command = (int)command.AUTHENTICATE;
         }
 
@@ -261,7 +272,8 @@ namespace client_server
 
         private void btnGetReq_Click(object sender, EventArgs e)
         {
-            SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get requirements " + current_project + " " + txtUsername.Text, TimeSpan.FromMilliseconds(100));
+            //SimpleTCP.Message newmessage = Client.WriteLineAndGetReply("get requirements " + current_project + " " + txtUsername.Text, TimeSpan.FromMilliseconds(1000));
+            Client.WriteLine("get requirements " + current_project + " " + txtUsername.Text);
             current_command = (int)command.GET_REQUIREMENTS;
         }
 

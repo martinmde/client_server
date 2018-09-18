@@ -20,6 +20,18 @@ namespace myserver
 {
     public partial class deserver : Form
     {
+
+
+        SimpleTcpServer server;
+        private void deserver_Load(object sender, EventArgs e)
+        {
+            server = new SimpleTcpServer();
+            server.Delimiter = 0x13; //Enter
+            server.StringEncoder = Encoding.UTF8;
+            server.DataReceived += deserver_DataReceived;
+        }
+
+
         List<string> projectsList = new List<string> { };
         int num_projects = 0;
         int num_users = 0;
@@ -220,8 +232,7 @@ namespace myserver
 
 
 
-        SimpleTcpServer server;
-
+       
 
         private void btnStart_Click(object sender, EventArgs e)
         {
@@ -322,6 +333,8 @@ namespace myserver
                 String project = command_user_pw[2];
                 String path= @"c:\client_server\"+project;
                 String chapter = "";
+                String [] subdirarray;
+                String subdir;
                 
 
                 string[] subdirectoryEntries = Directory.GetDirectories(path);  // every requirement is a subdirectory
@@ -330,7 +343,8 @@ namespace myserver
                 {
                     if (!subdirectory.Contains(".git"))
                     {
-
+                        subdirarray = subdirectory.Split('\\').ToArray();
+                        subdir = subdirarray[subdirarray.Length-1];
 
                         String chapter_file = subdirectory + @"\chapter.txt";
                         try
@@ -357,8 +371,9 @@ namespace myserver
                             {
                                 // Read the stream to a string, and write the string to the console.
                                 String line = sr.ReadLine();
-                                e.ReplyLine(chapter+ " "+line);
-                                log_sentback_data( chapter + " " + line);
+                                e.ReplyLine(chapter+ " "+subdir+" "+line);
+                                
+                                log_sentback_data( chapter+" " + subdir + " " + line);
 
                             }
                         }
@@ -373,25 +388,19 @@ namespace myserver
 
                     }
                 }
-                e.ReplyLine("(none)");
+                e.ReplyLine("(none)");  // terminates requirements
                 log_sentback_data( "(none)" + Environment.NewLine);
 
 
 
 
             }  // get requirements
-            else e.ReplyLine(e.MessageString); // default answer
+            else e.ReplyLine(e.MessageString+" unknown"); // default answer
 
         }
 
 
-        private void deserver_Load(object sender, EventArgs e)
-        {
-            server = new SimpleTcpServer();
-            server.Delimiter = 0x13; //Enter
-            server.StringEncoder = Encoding.UTF8;
-            server.DataReceived += deserver_DataReceived;
-        }
+      
 
        
 

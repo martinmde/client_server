@@ -320,7 +320,7 @@
             // 
             this.buttonIncChapter.Location = new System.Drawing.Point(769, 191);
             this.buttonIncChapter.Name = "buttonIncChapter";
-            this.buttonIncChapter.Size = new System.Drawing.Size(75, 23);
+            this.buttonIncChapter.Size = new System.Drawing.Size(75, 29);
             this.buttonIncChapter.TabIndex = 17;
             this.buttonIncChapter.Text = "-->";
             this.buttonIncChapter.UseVisualStyleBackColor = true;
@@ -329,7 +329,7 @@
             // 
             this.buttonReduceChapter.Location = new System.Drawing.Point(571, 191);
             this.buttonReduceChapter.Name = "buttonReduceChapter";
-            this.buttonReduceChapter.Size = new System.Drawing.Size(75, 23);
+            this.buttonReduceChapter.Size = new System.Drawing.Size(75, 29);
             this.buttonReduceChapter.TabIndex = 16;
             this.buttonReduceChapter.Text = "<--";
             this.buttonReduceChapter.UseVisualStyleBackColor = true;
@@ -348,7 +348,7 @@
             // 
             this.buttonUp.Location = new System.Drawing.Point(667, 157);
             this.buttonUp.Name = "buttonUp";
-            this.buttonUp.Size = new System.Drawing.Size(75, 34);
+            this.buttonUp.Size = new System.Drawing.Size(70, 34);
             this.buttonUp.TabIndex = 14;
             this.buttonUp.Text = "cut";
             this.buttonUp.UseVisualStyleBackColor = true;
@@ -368,7 +368,7 @@
             // 
             // btnGetReq
             // 
-            this.btnGetReq.Location = new System.Drawing.Point(259, 64);
+            this.btnGetReq.Location = new System.Drawing.Point(209, 85);
             this.btnGetReq.Name = "btnGetReq";
             this.btnGetReq.Size = new System.Drawing.Size(143, 33);
             this.btnGetReq.TabIndex = 10;
