@@ -11,7 +11,7 @@ using System.Threading;
 using SimpleTCP;
 using EasyEncryption;
 
-enum command:int { GET_PROJECTS=666, AUTHENTICATE, GET_REQUIREMENTS, TEST_COM } ;
+enum command:int { GET_PROJECTS=666, AUTHENTICATE, GET_REQUIREMENTS, TEST_COM, SEND_SIMPLE } ;
 
 
 namespace client_server
@@ -66,9 +66,9 @@ namespace client_server
         private void btnSend_Click(object sender, EventArgs e)
         {
             //SimpleTCP.Message newmessage = Client.WriteLineAndGetReply(txtMessage.Text, TimeSpan.FromMilliseconds(100));
+             
+             current_command= (int)command.SEND_SIMPLE;
              Client.WriteLine(txtMessage.Text);
-            
-            
             // data is received via event handler Client_DataReceived_phase1/2
             // Client_DataReceived_phase1/2 will handle the reply
         }
@@ -206,7 +206,7 @@ namespace client_server
         {
             messagecount++;
 
-            void p() 
+            void p()  // test communication
             {
                 String[] messages = e.MessageString.Split((char)0x13);
                 int i = 0;
@@ -215,6 +215,7 @@ namespace client_server
                     // and there  is a 0x13  between the messages
                     if (messages[i].Length >= 1)
                     {
+                        if (messages[i] == "(none)") break; // while
                         txtClientStatus.Text += messagecount.ToString() + "   " + messages[i] + Environment.NewLine;
                         String [] sha;
                         sha = messages[i].Split(' ');
@@ -227,18 +228,19 @@ namespace client_server
                     }
                 i++;
                 messagecount++;
-            }
-            }
+            } // while
+        }// p()
 
-            txtClientStatus.Invoke((MethodInvoker)p);
+        if (current_command == (int)command.TEST_COM)  txtClientStatus.Invoke((MethodInvoker)p);
 
 
-            /*void q()
+            void q()
             {
+                txtClientStatus.Clear();
                 txtClientStatus.Text += messagecount.ToString() + e.MessageString + Environment.NewLine;
             };
-            if(current_command==  (int)command.TEST_COM)  txtClientStatus.Invoke((MethodInvoker)q);
-            */
+            if(current_command==  (int)command.SEND_SIMPLE)  txtClientStatus.Invoke((MethodInvoker)q);
+            
 
 
 
@@ -262,6 +264,7 @@ namespace client_server
                 Client.DataReceived += Client_DataReceived_init;
                 lasttab = "init";
             }
+
             if (tabControl2.SelectedTab.Text.StartsWith("debug"))
             {
 
@@ -269,18 +272,15 @@ namespace client_server
                 if (lasttab == "init") Client.DataReceived -= Client_DataReceived_init;
                 Client.DataReceived += Client_DataReceived_debug;
                 lasttab = "debug";
-
-
-
             }
+
             if (tabControl2.SelectedTab.Text.StartsWith("work"))
             {
 
                 if (lasttab == "init") Client.DataReceived -= Client_DataReceived_init;
                 if (lasttab == "debug") Client.DataReceived -= Client_DataReceived_debug;
                 Client.DataReceived += Client_DataReceived_work;
-                lasttab = "work";
-                
+                lasttab = "work";                
             }
 
         }
